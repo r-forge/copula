@@ -1,4 +1,5 @@
-[A-Za-z]\+$
+[A-Za-z]\++$
+Rd?[-_]+$
 [A-Za-z]\+[A-Za-z0-9]
 ^do-
 ^Misc
@@ -37,4 +38,4 @@ inst/doc/(nacopula-pkg|Frank-Rmpfr)[-_].*\.(pdf|png)
 inst/doc/.*\.(log|blg|aux|out|tex|bbl|jpg|zip)$
 vignettes/.*_files
 vignettes/[^/]*\.(bbl|pdf|html)$
-...just.for.now...
+

@@ -158,6 +158,54 @@ loglikCopula <- function(param = getTheta(copula), u, copula,
     } else structure(-Inf, reason = "inadmissible param")
 }
 
+
+
+##' @title Compute Log-Likelihood of Given Copula for *many* param.values
+##' @param pList list of *free* parameter vectors
+##' @param u The data in [0,1]^d
+##' @param copula Copula object
+##' @return vector of log-likelihoods of given copula, data x, for each param in pList
+loglikCopulaMany <- function(pList, u, copula,
+                         error = c("-Inf", "warn-Inf", "let-it-be"))
+{
+    stopifnot(is.list(pList),
+              is.matrix(u), ncol(u) == dim(copula),
+              length(p <- unique(lengths(pList))) == 1) # p := length of each of the pList entries
+    error <- match.arg(error)
+    ## find the (S4) methods once, and use them directly below :
+    clCop <- class(copula)
+    setFreePar <- selectMethod(`freeParam<-`, signature = clC)
+    dCopulaS   <- selectMethod(dCopula,       signature = c("matrix", clC))
+    ## find the copula parameter boundaries once :
+    cop.param <- getTheta(copula, attr = TRUE) # freeOnly=TRUE;  attr=T : get bounds
+    lower <- attr(cop.param, "param.lowbnd")
+    upper <- attr(cop.param, "param.upbnd")
+    ## return the list
+    lapply(pList, function(param) {
+        switch(error,
+               "-Inf" = ,
+               "warn-Inf" = {
+                   r <- tryCatch(COP <- setFreePar(copula, param), error = function(e) e)
+                   if(inherits(r, "error")) {# param:  wrong-length || "out-of-bound" ..
+                       if(error == "warn-Inf") {
+                           r$call <- sys.call()
+                           warning(r)
+                       }
+                       return(structure(-Inf, reason = "param-setting error"))
+                   }
+               },
+               "let-it-be" =  # be fast in regular cases
+                   COP <- setFreePar(copula, param),
+               ## should never happen:
+               stop("invalid 'error' argument (should not happen, please report!): ", error))
+
+        if (!any(is.na(param) | param > upper | param < lower)) # admissible
+            sum(dCopulaS(u, copula=COP, log=TRUE, checkPar=FALSE))
+        else structure(-Inf, reason = "inadmissible param")
+    })
+}
+
+
 ##' not exported; used in  fitCopStart() and getIniParam()'s default method:
 getIni_itau <- function(copula, u, default, classDef = getClass(class(copula)), ...)
 {
@@ -581,7 +629,7 @@ fitCopula.itau.mpl <- function(copula, u, posDef=TRUE, lower=NULL, upper=NULL,
 ##' @param traceOpt logical or positive integer indicating if the object function should be traced during minimization
 ##' @param need.finite logical indicating if the optimizer needs \emph{finite} obj.fn values
 ##' @param finiteLARGE large positive number to replace \code{Inf} when \code{need.finite}
-##'                    is true or the \code{optim.method} is that needs box constraint bounds.
+##'                    is true or the \code{optim.method} needs box constraint bounds.
 ##' @param ... Additional arguments (currently with no effect)
 ##' @return The fitted copula object
 fitCopula.ml <- function(copula, u, method=c("mpl", "ml"), start, lower, upper,
@@ -603,8 +651,10 @@ fitCopula.ml <- function(copula, u, method=c("mpl", "ml"), start, lower, upper,
     if (dim(copula) != d)
         stop("The dimension of the data and copula do not match")
     if(missing(call)) call <- match.call()
-    if(is.null(start))
+    if(is.null(start)) {
         start <- fitCopStart(copula, u=u)
+        if(traceOpt) { cat("start := fitCopStart(..): "); print(start) }
+    }
     if(anyNA(start)) stop("'start' contains NA values")
 
     if(ismixC <- is(copula, "mixCopula")) {
@@ -656,23 +706,23 @@ fitCopula.ml <- function(copula, u, method=c("mpl", "ml"), start, lower, upper,
         cop.param <- getTheta(copula, freeOnly = TRUE, attr = TRUE)
         p.lowbnd <- attr(cop.param, "param.lowbnd")
         p.upbnd  <- attr(cop.param, "param.upbnd")
-        ## _Correct_bounds_  >>>> not-yet__see_*more*_problems__gofCopula(normalCopula()..)
-        ## if (is.null(lower)) {
-        ##     notI <- !is.infinite(p.lowbnd)
-        ##     p.lowbnd[notI] <- p.lowbnd[notI] + bound.eps*abs(p.lowbnd[notI])
-        ## }
-        ## if (is.null(upper)) {
-        ##     notI <- !is.infinite(p.upbnd)
-        ##     p.upbnd [notI] <- p.upbnd [notI] - bound.eps*abs(p.upbnd [notI])
-        ## }
+        if(bound.eps > 0) {
+            ## _Correct_bounds_ with bound.eps  but be careful with +/- Inf: Inf-Inf => NaN
+            if (is.null(lower)) {
+                notI <- !is.infinite(p.lowbnd) # finite or NA/NaN
+                p.lowbnd[notI] <- p.lowbnd[notI] + bound.eps*abs(p.lowbnd[notI])
+            }
+            if (is.null(upper)) {
+                notI <- !is.infinite(p.upbnd)
+                p.upbnd [notI] <- p.upbnd [notI] - bound.eps*abs(p.upbnd [notI])
+            }
+        }
     }
+ ### FIXME!  cases with "L-BFGS-B" and upper=Inf working much better than upper = <LARGE>
     if (is.null(lower))
-        ## _Correct_bounds_ lower <- if(meth.has.bounds) asFinite(p.lowbnd) else -Inf
-        lower <- if(meth.has.bounds) asFinite(p.lowbnd + bound.eps*abs(p.lowbnd)) else -Inf
-
+        lower <- if(meth.has.bounds) asFinite(p.lowbnd) else -Inf
     if (is.null(upper))
-        ## _Correct_bounds_ upper <- if(meth.has.bounds) asFinite(p.upbnd ) else Inf
-        upper <- if(meth.has.bounds) asFinite(p.upbnd  - bound.eps*abs(p.upbnd )) else Inf
+        upper <- if(meth.has.bounds) asFinite(p.upbnd)  else  Inf
 
     if(ismixC) {
         ## m <- length(is.freeW) # == length(copula@w)
@@ -733,7 +783,7 @@ fitCopula.ml <- function(copula, u, method=c("mpl", "ml"), start, lower, upper,
             if(has.asFinite) {
                 nb <- length(body(LL))
                 if(!need.finite)
-                    LogLsimp <- LL # before making it asFinite(.)
+                    logLsimp <- LL # before making it asFinite(.)
                 body(LL)[[nb]] <- do.call(substitute,
                                           list(body(LL)[[nb]],
                                                list(r = quote(asFinite(r)))))
@@ -772,18 +822,18 @@ fitCopula.ml <- function(copula, u, method=c("mpl", "ml"), start, lower, upper,
         ## defined (in1, in2)  above
         fitpar[in2] <- clr1inv(fitp0[in1]) * sumfreew
     }
-
     freeParam(copula) <- fitpar
+
     ## Check convergence of the fitting procedure
-    loglik <- fit$val
     has.conv <- fit[["convergence"]] == 0
+    if(!has.conv)
+        warning("possible convergence problem: optim() gave code=",
+                fit$convergence)
+
     if (is.na(estimate.variance))
         estimate.variance <- has.conv
     ## up to copula 1.0-1 had  "FALSE if not all weights fixed"
     ##  && (if(ismixC) !is.null(wf <- attr(copula@w, "fixed")) && all(wf) else TRUE)
-    if(!has.conv)
-        warning("possible convergence problem: optim() gave code=",
-                fit$convergence)
 
     ## Estimate the variance of the estimator
     Var0  <- matrix(numeric(), 0, 0)
@@ -791,9 +841,16 @@ fitCopula.ml <- function(copula, u, method=c("mpl", "ml"), start, lower, upper,
     var.est <- switch(
         method,
         "mpl" = {
-            if(estimate.variance) ## FIXME?  use tryCatch() as in "ml" case ??
-                var.mpl(copula, u) / nrow(u)
-            else
+            if(estimate.variance) {
+                v <- tryCatch(var.mpl(copula, u) / nrow(u), error=function(e) e)
+                if(inherits(v, "error")) {
+                    msg <- .makeMessage("var.mpl(copula, u) failed: ", v$message)
+                    warning(msg)
+                    structure(VarNA, msg = msg)
+                } else {
+                    v
+                }
+            } else
                 Var0
         },
         "ml" = {
@@ -831,7 +888,7 @@ fitCopula.ml <- function(copula, u, method=c("mpl", "ml"), start, lower, upper,
         estimate = fitpar,
         var.est = var.est,
         method = if(method=="mpl") "maximum pseudo-likelihood" else "maximum likelihood",
-        loglik = loglik,
+        loglik = fit$val,
         fitting.stats = c(list(method=optim.method),
                           fit[c("convergence", "counts", "message")],
                           control,
@@ -845,6 +902,8 @@ fitCopula.ml <- function(copula, u, method=c("mpl", "ml"), start, lower, upper,
 
 
 ### Wrapper ####################################################################
+
+## see setMethod("fitCopula", .., fitCopula_dflt)   below !
 
 ##' @title Default fitCopula() Method -- *THE* user fitting function
 ##' @param copula The copula to be fitted
@@ -880,8 +939,10 @@ fitCopula_dflt <- function(copula, data,
     }
     method <- match.arg(method)
     cl <- match.call()
-    if(cl[[1]] == quote(.local)) ## fix it up -- but how?  This fails:
-        {} ## FIXME: cl <- match.call(sys.function(sys.parent()))
+    if(cl[[1]] == quote(.local)) { ## fix it up:
+	p <- sys.parent()
+	cl <- match.call(sys.function(p), call = sys.call(p), expand.dots=FALSE)
+    }
     d <- ncol(data)
     if(method == "mpl" || method == "ml") { # "mpl" or "ml"
 	if(is.function(optim.method)) ## << force(.) + flexibility for the user

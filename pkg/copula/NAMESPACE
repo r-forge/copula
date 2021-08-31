@@ -120,7 +120,7 @@ exportMethods(## for "other" (i.e. non copula-package !) generics:
 ## Part I: Mainly former copula ----------------------------------------
 
 exportClasses(mvdc)
-#
+# note: have virtual classes we do *not* export: e.g, dimCopula , Xcopula
 exportClasses(Copula, parCopula, xcopula, copula, # virtual classes
 	      ellipCopula, archmCopula, evCopula, fhCopula)
 exportClasses(normalCopula, tCopula)
@@ -186,6 +186,7 @@ export(F.n, dCn, C.n, toEmpMargins) # .Fn
 
 ## fitting copula
 export(loglikCopula, loglikMvdc)
+export(loglikCopulaMany)
 export(fitCopula, fitMvdc, optimMeth)
 exportClasses(fittedMV, fitCopula, fitMvdc)
 

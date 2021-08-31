@@ -17,9 +17,9 @@ normalCopula(param, dim = 2, dispstr = "ex")
      tCopula(param, dim = 2, dispstr = "ex", df = 4,
              df.fixed = FALSE, df.min = 0.01)
 
-\S4method{pCopula}{matrix,normalCopula}(u, copula, algorithm = NULL, ...)
+\S4method{pCopula}{matrix,normalCopula}(u, copula, algorithm=NULL, keepAttr=FALSE, ...)
 % --> pnormalCopula() in ../R/normalCopula.R
-\S4method{pCopula}{matrix,tCopula}(u, copula, algorithm = NULL, ...)
+\S4method{pCopula}{matrix,tCopula}(u, copula, algorithm=NULL, keepAttr=FALSE, ...)
 % --> ptCopula() in ../R/tCopula.R
 }
 \arguments{
@@ -78,6 +78,8 @@ normalCopula(param, dim = 2, dispstr = "ex")
 	clause.}
     }
   }
+  \item{keepAttr}{\code{\link{logical}} passed to
+    \code{\link[mvtnorm]{pmvnorm}} or \code{\link[mvtnorm]{pmvt}}, respectively.}
   \item{\dots}{for the \code{pCopula()} methods, optional arguments to the
     corresponding algorithm.}
 }
@@ -91,13 +93,11 @@ normalCopula(param, dim = 2, dispstr = "ex")
 
   The  \code{\link{pCopula}()} methods for the normal- and t-copulas
   accept optional arguments to be passed to the underlying
-  (numerical integration) algorithms from package \pkg{mvtnorm}'s
+  (numerical integration) algorithms from package \CRANpkg{mvtnorm}'s
   \code{\link[mvtnorm]{pmvnorm}} and \code{\link[mvtnorm]{pmvt}},
   respectively, notably \code{algorithm}, see
   \code{\link[mvtnorm]{GenzBretz}}, or \code{abseps}
   which defaults to \code{0.001}.
-## For smaller copula dimension 'd', alternatives are available and
-## non-random, see ?GenzBretz from package 'mvtnorm'
 }
 %\author{Ivan Kojadinovic and Jun Yan}
 \seealso{
@@ -109,7 +109,7 @@ normalCopula(param, dim = 2, dispstr = "ex")
   \code{\link{archmCopula}}, \code{\link{fitCopula}}.
 }
 \examples{
-norm.cop <- normalCopula(c(0.5, 0.6, 0.7), dim = 3, dispstr = "un")
+normalCopula(c(0.5, 0.6, 0.7), dim = 3, dispstr = "un")
 t.cop <- tCopula(c(0.5, 0.3), dim = 3, dispstr = "toep",
                  df = 2, df.fixed = TRUE)
 getSigma(t.cop) # P matrix (with diagonal = 1)
@@ -132,7 +132,7 @@ set.seed(12)
 uN <- rCopula(512, norm.cop)
 set.seed(2); pN1 <- pCopula(uN, norm.cop)
 set.seed(3); pN2 <- pCopula(uN, norm.cop)
-stopifnot(all.equal(pN1, pN2, 1e-4))# see 5.711e-5
+stopifnot(identical(pN1, pN2)) # no longer random for dim = 3
 (Xtras <- copula:::doExtras())
 if(Xtras) { ## a bit more accurately:
   set.seed(4); pN1. <- pCopula(uN, norm.cop, abseps = 1e-9)
@@ -143,7 +143,7 @@ if(Xtras) { ## a bit more accurately:
 
 ## For smaller copula dimension 'd', alternatives are available and
 ## non-random, see ?GenzBretz from package 'mvtnorm' :
-has_mvtn <- "package:mvtnorm" \%in\% search()
+has_mvtn <- "package:mvtnorm" \%in\% search() #% << (workaround ESS Rd render bug)
 if(!has_mvtn)
   require("mvtnorm")# -> GenzBretz(), Miva(), and TVPACK() are available
 ## Note that Miwa() would become very slow for dimensions 5, 6, ..

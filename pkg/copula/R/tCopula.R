@@ -124,7 +124,7 @@ pmvtAlgo <- function(dim, x, ...) {
 }
 
 
-ptCopula <- function(u, copula, algorithm = NULL, ...)
+ptCopula <- function(u, copula, algorithm = NULL, keepAttr=FALSE, ...)
 {
   dim <- copula@dimension
   i.lower <- rep.int(-Inf, dim)
@@ -138,7 +138,8 @@ ptCopula <- function(u, copula, algorithm = NULL, ...)
       else { # algorithm depending on 'x' ..
           if(is.null(algorithm))
               algorithm <- pmvtAlgo(dim, x=x, ...)
-          pmvt(lower = i.lower, upper = x, sigma=sigma, df=df, algorithm=algorithm, ...)
+          pmvt(lower = i.lower, upper = x, sigma=sigma, df=df,
+               algorithm=algorithm, keepAttr=keepAttr, ...)
       })
 }
 

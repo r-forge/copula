@@ -6,6 +6,7 @@
 \alias{fitCopula,parCopula-method}
 \alias{fitCopula,rotCopula-method}
 \alias{loglikCopula}
+\alias{loglikCopulaMany}
 \alias{optimMeth}
 \description{
   Parameter estimation of copulas, i.e., fitting of a copula model to
@@ -15,9 +16,13 @@
 loglikCopula(param = getTheta(copula), u, copula,
              error = c("-Inf", "warn-Inf", "let-it-be"))
 
+loglikCopulaMany(pList, u, copula,
+                 error = c("-Inf", "warn-Inf", "let-it-be"))
+
+
 ## Generic [and "rotCopula" method] : %- ../R/fitCopula.R
 fitCopula(copula, data, \dots)
-\S4method{fitCopula}{copula}(copula, data,
+\S4method{fitCopula}{parCopula}(copula, data,
           method = c("mpl", "ml", "itau", "irho", "itau.mpl"),
           posDef = is(copula, "ellipCopula"),
           start = NULL, lower = NULL, upper = NULL,
@@ -30,6 +35,8 @@ optimMeth(copula, method, dim)
 \arguments{
   \item{param}{vector of \emph{free} (see \code{\link{isFree}()} and
     \code{\link{getTheta}()}) parameter values.}
+  \item{pList}{a \code{\link{list}} of \emph{free} parameter vectors (as
+    \code{param} above).}
   \item{u}{\eqn{n\times d}{n x d}-matrix of (pseudo-)observations in
     \eqn{[0,1]^d} for computing the copula log-likelihood, where \eqn{n} denotes
     the sample size and \eqn{d} the dimension.  Consider applying the function
@@ -112,8 +119,9 @@ optimMeth(copula, method, dim)
   \item{\dots}{additional arguments passed to \code{method} specific auxiliary
     functions, e.g., \code{traceOpt = TRUE} (or \code{traceOpt = 10}) for tracing
     \code{\link{optimize}} (every 10-th function evaluation) for method
-    \code{"itau.mpl"}, and for \dQuote{"manual"} tracing with method
-    \code{"ml"} or \code{"mpl"} (notably for \code{optim.method="Brent"}),
+    \code{"itau.mpl"}, and for \dQuote{manual} tracing with method
+    \code{"ml"} or \code{"mpl"} also showing parameter values
+    (notably for \code{optim.method="Brent"}),
     see the extra arguments of namespace-hidden function
     \code{fitCopula.ml()}.}
 }
@@ -165,7 +173,7 @@ optimMeth(copula, method, dim)
 
   For normal and \eqn{t} copulas, \code{fitCopula(, method = "mpl")} and
   \code{fitCopula(, method = "ml")} maximize the log-likelihood based on
-  \pkg{mvtnorm}'s \code{dmvnorm()} and \code{dmvt()}, respectively.
+  \CRANpkg{mvtnorm}'s \code{dmvnorm()} and \code{dmvt()}, respectively.
   The latter two functions set the respective densities to zero if the
   correlation matrices of the corresponding distributions are not
   positive definite. As such, the estimated correlation matrices
