@@ -1463,7 +1463,7 @@ setMethod(show, "acopula", function(object) printAcopula(object))
 
 ## This is now exported & has help file --> ../man/printNacopula.Rd :
 printNacopula <-
-    function(x, labelKids = NA, deltaInd = if(identical(labelKids,FALSE)) 5 else 3,
+    function(x, labelKids = NA, deltaInd = if(isFALSE(labelKids)) 5 else 3,
              indent.str="",
              digits = getOption("digits"), width = getOption("width"), ...)
 {

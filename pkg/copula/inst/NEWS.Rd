@@ -3,7 +3,7 @@
 \name{NEWS}
 \title{News for \R Package \pkg{copula}}% MM: look into ../svn-log-from.all
 
-\section{Changes in version 1.0-2 (2021-08-31, svn r1861)}{
+\section{Changes in version 1.0-2 (2021-08-31, svn r1862)}{
   \subsection{New Features}{
     \itemize{
       \item \code{fitCopula(<mixCopula>)} now by default uses
@@ -14,6 +14,9 @@
 
       \item \code{"mvdc"} class objects no longer inherit from \code{"xcopula"} (a
       copula) but from new \code{"Xcopula"} (which just \emph{contains} a copula).
+
+      \item using \code{isTRUE()} and \code{isFALSE()} instead of
+      \code{identical(TRUE, .)} etc.
     }
   }
 }
