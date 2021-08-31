@@ -325,7 +325,7 @@ validMvdc <- function(object) {
     TRUE
 }## validMvdc()
 
-setClass("mvdc", contains = "xcopula", #-> slot "copula"; additionally :
+setClass("mvdc", contains = "Xcopula", #-> slot "copula"; additionally :
 	 slots = c(
                    margins = "character",
                    paramMargins = "list",

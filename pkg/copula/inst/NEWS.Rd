@@ -2,9 +2,8 @@
 %  news(db = tools:::.build_news_db_from_package_NEWS_Rd("~/R/Pkgs/copula/inst/NEWS.Rd"))
 \name{NEWS}
 \title{News for \R Package \pkg{copula}}% MM: look into ../svn-log-from.all
-\newcommand{\CRANpkg}{\href{https://CRAN.R-project.org/package=#1}{\pkg{#1}}}
 
-\section{Changes in version 1.0-2 (2021-02-10, svn r....)}{
+\section{Changes in version 1.0-2 (2021-08-31, svn r1861)}{
   \subsection{New Features}{
     \itemize{
       \item \code{fitCopula(<mixCopula>)} now by default uses
@@ -12,6 +11,9 @@
       weights.
 
       \item \code{fitLambda()} gets new method \code{"Schmidt.Stadtmueller"}.
+
+      \item \code{"mvdc"} class objects no longer inherit from \code{"xcopula"} (a
+      copula) but from new \code{"Xcopula"} (which just \emph{contains} a copula).
     }
   }
 }
