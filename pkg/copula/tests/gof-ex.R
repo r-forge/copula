@@ -114,7 +114,7 @@ apply(RR[,c("timeEstim","timeGoF"),,], c(3,1,2), mean)
 showProc.time()
 
 
-### *Some* minimal  gofCopula() examples {the help page has \dontrun{} !}
+### *Some* minimal  gofCopula() examples {the help page has \donttest{} !}
 catn <- function(...) cat(..., "\n", sep="")
 set.seed(101)
 
