@@ -1,4 +1,4 @@
-## Copyright (C) 2012 Marius Hofert, Ivan Kojadinovic, Martin Maechler, and Jun Yan
+## Copyright (C) 2021 Marius Hofert, Ivan Kojadinovic, Martin Maechler, and Jun Yan
 ##
 ## This program is free software; you can redistribute it and/or modify it under
 ## the terms of the GNU General Public License as published by the Free Software
@@ -155,7 +155,7 @@ print(tcF.mpl <- fitCopula(tC3u5, u, method="mpl", estimate.variance=FALSE,
                            start=c(0,0,0)))
 print(tcF.mp. <- fitCopula(tC3u5, u, method="mpl", estimate.variance=FALSE))
 assert.EQ(noC(tcF.mpl), noC(tcF.mp.), tol = 1e-5)
-} # end Xtras
+} # end Extras ----------------------------------------------------
 
 ## fitMvdc() -- first 2 D -- from Yiyun Shou's bug report: ---------------------
 
@@ -245,10 +245,20 @@ try(fgu <- fitCopula(gumbel, u, method = "ml"))
 ## In addition: Warning message:
 ## In .local(copula, tau, ...) : tau is out of the range [0, 1]
 copGumbel@paraInterval # -> [1, Inf) = exp([0, Inf))
-par <- 2^c((0:32)/16, 2+(1:10)/8)
+length(par <- 2^c((0:32)/16, 2+(1:10)/8)) # 43
+(t1 <- system.time(
 llg <- sapply(par, function(p) loglikCopula(param=p, u=u, copula=gumbel))
+))
+(t2 <- system.time(
+llg. <- loglikCopulaMany(par, u=u, copula=gumbel)
+))
+all.equal(llg, llg., tol=0)
 if(dev.interactive()) plot(par, llg, type="b", col=2)
-stopifnot(diff(llg) < 0) # so the maximum is for par = 2^0 = 1 --> at *boundary* of interval
+stopifnot(exprs = {
+    diff(llg) < 0 # so the maximum is for par = 2^0 = 1 --> at *boundary* of interval
+    all.equal(llg, llg., tol=4e-16) # see 0 diff (Lnx 64b)
+})
+
 ## FIXME -- "ml" should return the boundary case, or a much better error message
 ## These work (with a warning {which is interesting, but maybe should not be a warning}
 ## "perfectly": They give the correct boundary case:

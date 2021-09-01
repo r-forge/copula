@@ -161,48 +161,30 @@ loglikCopula <- function(param = getTheta(copula), u, copula,
 
 
 ##' @title Compute Log-Likelihood of Given Copula for *many* param.values
-##' @param pList list of *free* parameter vectors
+##' @param pList list of *free* parameter vectors; may be numeric vector for length(param) == 1
 ##' @param u The data in [0,1]^d
 ##' @param copula Copula object
 ##' @return vector of log-likelihoods of given copula, data x, for each param in pList
-loglikCopulaMany <- function(pList, u, copula,
-                         error = c("-Inf", "warn-Inf", "let-it-be"))
+loglikCopulaMany <- function(pList, u, copula) ## only the "let-it-be" option ==> no tryCatch()
 {
-    stopifnot(is.list(pList),
-              is.matrix(u), ncol(u) == dim(copula),
-              length(p <- unique(lengths(pList))) == 1) # p := length of each of the pList entries
-    error <- match.arg(error)
+    stopifnot(is.matrix(u), ncol(u) == dim(copula),
+              length(unique(lengths(pList))) == 1) # same length of each pList entry
     ## find the (S4) methods once, and use them directly below :
     clCop <- class(copula)
-    setFreePar <- selectMethod(`freeParam<-`, signature = clC)
-    dCopulaS   <- selectMethod(dCopula,       signature = c("matrix", clC))
+    setFreePar <- selectMethod(`freeParam<-`, signature = c(clCop, "numeric"))
+    dCopulaS   <- selectMethod(dCopula,       signature = c("matrix", clCop))
     ## find the copula parameter boundaries once :
     cop.param <- getTheta(copula, attr = TRUE) # freeOnly=TRUE;  attr=T : get bounds
     lower <- attr(cop.param, "param.lowbnd")
     upper <- attr(cop.param, "param.upbnd")
-    ## return the list
-    lapply(pList, function(param) {
-        switch(error,
-               "-Inf" = ,
-               "warn-Inf" = {
-                   r <- tryCatch(COP <- setFreePar(copula, param), error = function(e) e)
-                   if(inherits(r, "error")) {# param:  wrong-length || "out-of-bound" ..
-                       if(error == "warn-Inf") {
-                           r$call <- sys.call()
-                           warning(r)
-                       }
-                       return(structure(-Inf, reason = "param-setting error"))
-                   }
-               },
-               "let-it-be" =  # be fast in regular cases
-                   COP <- setFreePar(copula, param),
-               ## should never happen:
-               stop("invalid 'error' argument (should not happen, please report!): ", error))
-
-        if (!any(is.na(param) | param > upper | param < lower)) # admissible
-            sum(dCopulaS(u, copula=COP, log=TRUE, checkPar=FALSE))
-        else structure(-Inf, reason = "inadmissible param")
-    })
+    ## admissible par.values:
+    ok <- vapply(pList, function(p) !any(is.na(p) | p > upper | p < lower), NA)
+    ret <- numeric(length(ok))## return a numeric vector of log-likelihoods
+    ret[!ok] <- -Inf
+    ret[ok] <- vapply(pList[ok], function(param)
+        sum(dCopulaS(u, copula=setFreePar(copula, param), log=TRUE, checkPar=FALSE)),
+        numeric(1))
+    ret
 }
 
 

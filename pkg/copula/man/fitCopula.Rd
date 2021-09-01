@@ -16,9 +16,7 @@
 loglikCopula(param = getTheta(copula), u, copula,
              error = c("-Inf", "warn-Inf", "let-it-be"))
 
-loglikCopulaMany(pList, u, copula,
-                 error = c("-Inf", "warn-Inf", "let-it-be"))
-
+loglikCopulaMany(pList, u, copula)
 
 ## Generic [and "rotCopula" method] : %- ../R/fitCopula.R
 fitCopula(copula, data, \dots)
@@ -36,7 +34,8 @@ optimMeth(copula, method, dim)
   \item{param}{vector of \emph{free} (see \code{\link{isFree}()} and
     \code{\link{getTheta}()}) parameter values.}
   \item{pList}{a \code{\link{list}} of \emph{free} parameter vectors (as
-    \code{param} above).}
+    \code{param} above).  In the 1D case, \code{length(param) == 1}, may
+    also be a numeric vector.}
   \item{u}{\eqn{n\times d}{n x d}-matrix of (pseudo-)observations in
     \eqn{[0,1]^d} for computing the copula log-likelihood, where \eqn{n} denotes
     the sample size and \eqn{d} the dimension.  Consider applying the function
@@ -128,6 +127,10 @@ optimMeth(copula, method, dim)
 \value{
   \code{loglikCopula()} returns the copula log-likelihood evaluated at the
   parameter (vector) \code{param} given the data \code{u}.
+
+  \code{loglikCopulaMany()} returns a numeric vector of such
+  log-likelihoods; it assumes consistent parameter values, corresponding to
+  \code{loglikCopula()}'s \code{error = "let-it-be"}, for speed.
 
   The return value of \code{fitCopula()} is an object of class
   \code{"\linkS4class{fitCopula}"} (inheriting from hidden class

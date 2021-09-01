@@ -386,7 +386,6 @@ nobs.fittedMV <- function(object, ...) object@nsample
 
 vcov.fittedMV <- function(object, orig=TRUE, ...) {
     pNms <- paramNames(object)
-    cf <- object@estimate
     pT <- object@fitting.stats$paramTrafo
     if(length(pT)) {
         switch(pT$kind,

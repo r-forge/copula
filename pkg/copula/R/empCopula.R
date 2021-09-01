@@ -208,7 +208,7 @@ setMethod("dCopula", signature("matrix", "empCopula"),
         n <- nrow(X)
         if(!is.matrix(u)) u <- rbind(u) # (m, d) matrix of evaluation points
         m <- nrow(u)
-        d <- ncol(X) # = dim(copula)
+        ## d <- ncol(X) # = dim(copula)
         offset <- copula@offset
         ## OLD CODE: WRONG!
         ## f <- vapply(1:m, FUN = function(k)
