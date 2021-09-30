@@ -8,7 +8,7 @@
 \alias{pCopula,matrix,tCopula-method}
 \description{
   Creating elliptical copula objects with corresponding dimension and
-  parameters, including the dispersion structure \eqn{\Rho} (pronounced \dQuote{Rho}).
+  parameters, including the dispersion structure \eqn{P} (pronounced \dQuote{Rho}).
 }
 \usage{
 ellipCopula (family, param, dim = 2, dispstr = "ex", df = 4, ...)
@@ -230,10 +230,12 @@ stopifnot(exprs = {
            loglikCopula(tpar, u=U.[,pm], copula= N4.p3) -> LL.)
 })
 c(LL. , LL3)# similar but different
-fm.  <- fitCopula(N4.  , U.  )
-fm.3 <- fitCopula(N4.p3, U.p3)
-summary(fm.3)
-stopifnot(all.equal(coef(fm.), coef(fm.3), tol = 0.01))# similar but different
+if(Xtras) {
+  fm.  <- fitCopula(N4.  , U.  )
+  fm.3 <- fitCopula(N4.p3, U.p3)
+  summary(fm.3)
+  stopifnot(all.equal(coef(fm.), coef(fm.3), tol = 0.01))# similar but different
+}
 }
 \keyword{distribution}
 \keyword{multivariate}
