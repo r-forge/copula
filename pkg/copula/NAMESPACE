@@ -62,7 +62,7 @@ importFrom("lattice", trellis.par.get, trellis.par.set,
            standard.theme, panel.fill, panel.splom, diag.panel.splom,
            panel.3dwire, ltransform3dto3d, lsegments)
 
-importFrom("Matrix", nearPD)
+importFrom("Matrix", nearPD, invPerm)
 ## NB: "Dangerous" to not also depend on Matrix; as 'methods' for Matrixclasses are not seen.
 
 importFrom("gsl", debye_1, debye_2, dilog, complex_dilog)
@@ -180,6 +180,7 @@ exportClasses(mixCopula) # , parClist , mixWeights  (TODO, notably 'parClist' ??
 
 ## auxiliary functions mainly used for working with elliptical copulas:
 export(p2P, P2p, getSigma, extremePairs)
+export(dispstrToep)
 
 ## empirical copula
 export(F.n, dCn, C.n, toEmpMargins) # .Fn

@@ -160,17 +160,9 @@ dtCopula <- function(u, copula, log = FALSE, ...) {
 }
 
 
-printTCopula <- function(x, ...) {
-  printCopula(x, ...)
-  if (x@dimension > 2) cat("dispstr: ", x@dispstr, "\n")
-  ## redundant now with := in params
-  ## if (x@df.fixed) cat("df is fixed at", getdf(x), "\n")
-  invisible(x)
-}
-
 ## as long we think we need print.copula(), we also need this:
-print.tCopula <- printTCopula
-setMethod("show", signature("tCopula"), function(object) printTCopula(object))
+print.tCopula <- printEllipCopula
+setMethod("show", signature("tCopula"), function(object) printEllipCopula(object))
 
 
 lambdaTCopula <- function(copula)

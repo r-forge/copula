@@ -31,7 +31,7 @@ normalCopula <- function(param = NA_real_, dim = 2L, dispstr = "ex") {
 }
 
 
-rnormalCopula <- function(n, copula)
+rnormalCopula <- function(n, copula, ...)
     pnorm(rmvnorm(n, sigma = getSigma(copula)))
 
 pmvnormAlgo <- function(dim, x, checkCorr = FALSE, ...) {
@@ -110,15 +110,9 @@ dmvnorm <- function (x, mean, sigma, log=FALSE)
 
 
 
-printNormalCopula <- function(x, ...) {
-  printCopula(x, ...)
-  if (x@dimension > 2) cat("dispstr: ", x@dispstr, "\n")
-  invisible(x)
-}
-
 ## as long we think we need print.copula(), we also need this:
-print.normalCopula <- printNormalCopula
-setMethod("show", signature("normalCopula"), function(object) printNormalCopula(object))
+print.normalCopula <- printEllipCopula
+setMethod("show", signature("normalCopula"), function(object) printEllipCopula(object))
 
 
 lambdaNormalCopula <- function(copula) {

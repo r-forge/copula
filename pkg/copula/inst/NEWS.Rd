@@ -3,7 +3,7 @@
 \name{NEWS}
 \title{News for \R Package \pkg{copula}}% MM: look into ../svn-log-from.all
 
-\section{Changes in version 1.0-2 (2021-09-01, svn r1866)}{
+\section{Changes in version 1.1-0 (2021-09-30, svn r1867)}{
   \subsection{New Features}{
     \itemize{
       \item \code{fitCopula(<mixCopula>)} now by default uses
@@ -25,6 +25,13 @@
 
       \item New \code{loglikCopulaMany(pList, ..)} function for (more
       efficiently) computing copula likelihoods for many parameter vectors / values.
+
+      \item For elliptic (t-, normal-) copulas, provide \dQuote{permuted
+      Toeplitz} dispersion via new \code{dispstrToep()} which allows to
+      specify a \emph{permutation} of the \eqn{d} variables / columns /
+      coordinates to have a Toeplitz correlation structure.
+      % This allows many more \dQuote{medium-size} parametrized elliptical
+      % copulas to be fit to data.
     }
   }
   \subsection{Bug Fixes}{
