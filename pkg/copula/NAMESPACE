@@ -267,11 +267,13 @@ exportClasses("acopula",
 export("copAMH", "copClayton", "copFrank", "copGumbel", "copJoe"
        , .ac.shortNames, .ac.longNames, .ac.objNames, .ac.classNames
        ,"getAcop", "getAname"
-       , "dnacopula", "pnacopula", "rnacopula", "rnchild"
+       ,"dnacopula", "pnacopula", "rnacopula", "rnchild"
+       ## marginal transformations
+       ,"pobs", "ruobs"
        ## estimation
        ,"coeffG" ## , "polyG", "polyJ", "signFF"
        ,"initOpt"
-       ,"beta.", "betan", "pobs"
+       ,"beta.", "betan"
        ,"debye1", "debye2" # <- since we extend the gsl ones
        ,"ebeta", "etau", "emde", "dDiag", "edmle", "emle", "enacopula"
        ## goodness-of-fit

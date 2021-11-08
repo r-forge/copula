@@ -247,30 +247,24 @@ setMethod("dCopula", signature("matrix", "empCopula"),
 ## rCopula method
 setMethod("rCopula", signature("numeric", "empCopula"),
 	  function(n, copula) {
-              N <- nrow(copula@X) # number of copula observations
-              d <- dim(copula)
-              ii <- sample(1:N, size = n, replace = TRUE) # random row indices
               switch(copula@smoothing,
                      "none" = {
+                         ii <- sample(1:nrow(copula@X), size = n, replace = TRUE) # random row indices
                          copula@X[ii,] # resample from the original copula data
                      },
                      "beta" = {
-                         ## See Segers, Sibuya, Tsukahara (2016, "The Empirical Beta Copula", page 3)
-                         X.ranks <- apply(copula@X, 2, rank, ties.method = "random") # get the ranks ('R' in reference)
-                         W <- matrix(runif(N * d), ncol = d) # sample iid U(0,1)
-                         W.ordered <- apply(W, 2, sort) # sort the W's ('V' in reference)
-                         V.tilde <- sapply(1:d, function(j) W.ordered[X.ranks[,j],j]) # use the X ranks to index the sorted Ws
-                         V.tilde[ii,] # randomly index
+                         ruobs(copula@X, n = n) # randomly sample from rank-indexed sorted uniforms
+                         ## OLD:
+                         ## X.ranks <- apply(copula@X, 2, rank, ties.method = "random") # get the ranks ('R' in reference)
+                         ## W <- matrix(runif(N * d), ncol = d) # sample iid U(0,1)
+                         ## W.ordered <- apply(W, 2, sort) # sort the W's ('V' in reference)
+                         ## V.tilde <- sapply(1:d, function(j) W.ordered[X.ranks[,j],j]) # use the X ranks to index the sorted Ws
+                         ## V.tilde[ii,] # randomly index
                      },
                      "checkerboard" = {
-                         ## See Cuberus et al. (2019, "Copulas checker-type approximations:
-                         ## Application to quantiles estimation of sums of dependent random variables")
-                         ## or Genest, Neslehova (2007, "A primer on copulas for count data")
-                         ## The empirical checkerboard copula uses uniform mass in each
-                         ## d-box \prod_{j=1}^d ((i_j-1)/N, i_j/N] for each (i_1,..,i_d)
-                         ## in {1,...,N}^d. As such, this is equivalent to Latin Hypercube Sampling.
                          V <- rLatinHypercube(copula@X, ties.method = "random")
-                         V[ii,] # randomly index
+                         ii <- sample(1:nrow(copula@X), size = n, replace = TRUE) # random row indices
+                         V[ii,] # randomly index Latin Hypercube sample
                      },
                      stop("Wrong 'smoothing'"))
           })
