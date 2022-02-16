@@ -164,7 +164,8 @@ dCn <- function(u, U, j.ind = 1:d, b = 1/sqrt(nrow(U)), ...)
 ### Empirical copula class #####################################################
 
 ## Constructor
-empCopula <- function(X, smoothing = c("none", "beta", "checkerboard"), offset = 0,
+empCopula <- function(X, smoothing = c("none", "beta", "checkerboard", "schaake.shuffle"),
+                      offset = 0,
                       ties.method = c("max", "average", "first", "last", "random", "min"))
 {
     if(is.data.frame(X) || !is.matrix(X)) X <- as.matrix(X)
@@ -241,7 +242,18 @@ setMethod("dCopula", signature("matrix", "empCopula"),
             }, NA_real_) / (n + offset)
         }
 
-    } else stop("Empirical copula only has a density for smoothing = 'beta'")
+    } else stop("Empirical copula only known to have a density for smoothing = 'beta'")
+})
+
+## pCopula method
+setMethod("pCopula", signature("matrix", "empCopula"),
+	  function(u, copula, log.p = FALSE, ...)
+{
+    if(copula@smoothing == "schaake.shuffle")
+        stop('pCopula() not available for smoothing method "schaake.shuffle"')
+    res <- C.n(u, X = copula@X, smoothing = copula@smoothing,
+               offset = copula@offset, ties.method = copula@ties.method, ...)
+    if(log.p) log(res) else res
 })
 
 ## rCopula method
@@ -253,13 +265,20 @@ setMethod("rCopula", signature("numeric", "empCopula"),
                          copula@X[ii,] # resample from the original copula data
                      },
                      "beta" = {
+                         ## Preliminaries
                          x <- copula@X
                          dm <- dim(x)
-                         n.x <- dm[1]
+                         n.x <- dm[1] # size of original sample
                          d <- dm[2]
-                         R <- apply(x, 2, rank, na.last = "keep", ties.method = "average") # (n.x,d)-matrix
+
+                         ## Ranks of x
+                         R <- apply(x, 2, rank, na.last = "keep", ties.method = "average") # (n.x, d)-matrix
+
+                         ## Randomly grab out n rows of R
                          I <- sample(1:n.x, size = n, replace = TRUE) # n-vector of random indices
                          R.I <- R[I,] # (n,d)-matrix of I-indexed R's
+
+                         ## Sample from respective beta distributions
                          matrix(rbeta(n * d, R.I, n.x+1-R.I), ncol = d) # rbeta() works for vectors of arguments
                      },
                      "checkerboard" = {
@@ -267,16 +286,20 @@ setMethod("rCopula", signature("numeric", "empCopula"),
                          ii <- sample(1:nrow(copula@X), size = n, replace = TRUE) # random row indices
                          V[ii,] # randomly index Latin Hypercube sample
                      },
+                     "schaake.shuffle" = {
+                         x <- copula@X
+                         dm <- dim(x)
+                         n.x <- dm[1] # size of original sample
+                         d <- dm[2]
+                         R <- apply(x, 2, rank, na.last = "keep", ties.method = "average") # (n.x, d)-matrix of ranks
+                         U.sort <- apply(matrix(runif(n.x * d), ncol = d), 2, sort) # (n.x, d)-matrix of sorted U's
+                         U <- vapply(seq_len(d),
+                                     function(j) U.sort[R[,j],j], numeric(n.x)) # sort U. according to ranks R
+                         I <- sample(1:n.x, size = n, replace = TRUE) # n-vector of random indices
+                         U[I,] # randomly index
+                     },
                      stop("Wrong 'smoothing'"))
           })
-
-## pCopula method
-setMethod("pCopula", signature("matrix", "empCopula"),
-	  function(u, copula, log.p = FALSE, ...) {
-    res <- C.n(u, X = copula@X, smoothing = copula@smoothing,
-               offset = copula@offset, ties.method = copula@ties.method, ...)
-    if(log.p) log(res) else res
-})
 
 ## Measures of association (unclear what their values are for smoothing = "beta" or "checkerboard"
 ## setMethod("tau", signature("empCopula"), function(copula) ) # unclear
