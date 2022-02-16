@@ -253,13 +253,14 @@ setMethod("rCopula", signature("numeric", "empCopula"),
                          copula@X[ii,] # resample from the original copula data
                      },
                      "beta" = {
-                         ruobs(copula@X, n = n) # randomly sample from rank-indexed sorted uniforms
-                         ## OLD:
-                         ## X.ranks <- apply(copula@X, 2, rank, ties.method = "random") # get the ranks ('R' in reference)
-                         ## W <- matrix(runif(N * d), ncol = d) # sample iid U(0,1)
-                         ## W.ordered <- apply(W, 2, sort) # sort the W's ('V' in reference)
-                         ## V.tilde <- sapply(1:d, function(j) W.ordered[X.ranks[,j],j]) # use the X ranks to index the sorted Ws
-                         ## V.tilde[ii,] # randomly index
+                         x <- copula@X
+                         dm <- dim(x)
+                         n.x <- dm[1]
+                         d <- dm[2]
+                         R <- apply(x, 2, rank, na.last = "keep", ties.method = "average") # (n.x,d)-matrix
+                         I <- sample(1:n.x, size = n, replace = TRUE) # n-vector of random indices
+                         R.I <- R[I,] # (n,d)-matrix of I-indexed R's
+                         matrix(rbeta(n * d, R.I, n.x+1-R.I), ncol = d) # rbeta() works for vectors of arguments
                      },
                      "checkerboard" = {
                          V <- rLatinHypercube(copula@X, ties.method = "random")

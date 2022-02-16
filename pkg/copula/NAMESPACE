@@ -269,7 +269,7 @@ export("copAMH", "copClayton", "copFrank", "copGumbel", "copJoe"
        ,"getAcop", "getAname"
        ,"dnacopula", "pnacopula", "rnacopula", "rnchild"
        ## marginal transformations
-       ,"pobs", "ruobs"
+       ,"pobs"
        ## estimation
        ,"coeffG" ## , "polyG", "polyJ", "signFF"
        ,"initOpt"

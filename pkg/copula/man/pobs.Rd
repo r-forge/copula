@@ -39,9 +39,6 @@ pobs(x, na.last = "keep",
   \code{pobs(, lower.tail=FALSE)} simply returns \code{1-pobs()}.
 }
 %\author{Marius Hofert}
-\seealso{
-  \code{\link{ruobs}()} for a specialized transform to standard uniform margins.
-}
 \examples{
 ## Simple definition of the function:
 pobs
