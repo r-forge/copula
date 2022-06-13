@@ -3,7 +3,7 @@
 \name{NEWS}
 \title{News for \R Package \pkg{copula}}% MM: look into ../svn-log-from.all
 
-\section{Changes in version 1.1-0 (2021-09-30, svn r1867)}{
+\section{Changes in version 1.1-0 (2022-06-13, svn r1874)}{
   \subsection{New Features}{
     \itemize{
       \item \code{fitCopula(<mixCopula>)} now by default uses
@@ -39,6 +39,8 @@
       \item New arguments and defaults \code{keepAttr=FALSE} and \code{checkCorr=FALSE}
       for \CRANpkg{mvtnorm}'s \code{Miwa()} should speed up
       \code{pCopula()} for normal- and t- copulas.
+
+      \item Empirical copula computations tweaks, preventing some erronous computations.
     }
   }
 }
