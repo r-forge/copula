@@ -3,7 +3,7 @@
 \name{NEWS}
 \title{News for \R Package \pkg{copula}}% MM: look into ../svn-log-from.all
 
-\section{Changes in version 1.1-0 (2022-06-13, svn r1874)}{
+\section{Changes in version 1.1-0 (2022-06-14, svn r1875)}{
   \subsection{New Features}{
     \itemize{
       \item \code{fitCopula(<mixCopula>)} now by default uses
