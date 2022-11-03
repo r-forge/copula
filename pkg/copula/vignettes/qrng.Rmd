@@ -30,7 +30,7 @@ library(randtoolbox)
 Let's start with something known, the independence case.
 
 ```{r, fig.align="center", fig.width=12, fig.height=6, fig.show="hide"}
-n <- 1000 # sample size
+n <- 720 # sample size  (was 1000; save space for *.html)
 set.seed(271) # set the seed (for reproducibility)
 U <- matrix(runif(n*2), ncol = 2) # pseudo-random numbers
 U. <- halton(n, dim = 2) # quasi-random numbers
@@ -231,7 +231,7 @@ stochastic representation in terms of the Gamma frailty distribution and two
 standard exponentials) based on a three-dimensional Halton sequence.
 
 ```{r}
-n <- 1000
+n <- 720
 family <- "Clayton"
 tau <- 0.5
 th <- iTau(getAcop(family), tau)
@@ -285,7 +285,8 @@ representation)), hence four different sampling methods.
 
 Here is our setup.
 ```{r}
-n <- round(2^seq(12, 16, by = 0.5)) # sample sizes
+n <- round(2^seq(12, 16, by = 0.5)) # sample sizes (for "paper")
+n <- round(2^seq(11, 14, by = 0.5)) # sample sizes (for package vignette)
 B <- 25 # number of replications
 d <- 5 # dimension
 tau <- 0.5 # Kendall's tau

@@ -155,7 +155,8 @@ rC <- function(n, H, LambdaInv, S1, S2, p1, p2, p1Inv, p2Inv){
 }
 
 ## Generate copula data
-n <- 2e4
+n <- 2e4  # <<< use for niceness
+n <- 4000 # (rather use to decrease *.html and final package size)
 H <- 10
 set.seed(271)
 U <- rC(n, H=H, LambdaInv=LambdaInv, S1=S1, S2=S2, p1=p1, p2=p2, p1Inv=p1Inv, p2Inv=p2Inv)

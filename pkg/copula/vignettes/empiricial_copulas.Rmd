@@ -155,7 +155,8 @@ First, we generate dependent Bernoulli random variables.
 ## Generate some data with Bernoulli margins
 tau <- 0.5
 gc <- normalCopula(iTau(normalCopula(), tau = tau))
-n <- 1e4
+n <- 1e4  ## <-- use this  for scientific reason
+n <- 1000 # <<< prefer to decrease *.html and final package size
 set.seed(271)
 U <- rCopula(n, copula = gc)
 p <- c(1/2, 3/4) # marginal probabilities p_1, p_2 of being 1
