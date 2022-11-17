@@ -10,6 +10,10 @@ vignette: >
   %\VignetteIndexEntry{Hierarchical Archimax Copulas}
   %\VignetteEncoding{UTF-8}
 ---
+
+```{r prelim, echo=FALSE}
+## lower resolution - less size  (default dpi = 72):
+knitr::opts_chunk$set(dpi = 48)
 ```{r, message = FALSE}
 library(copula) # for hierarchical frailties, generators etc.
 library(mev) # for rmev()
