@@ -82,7 +82,8 @@ void rF01Joe_vec(double* V01, const double *V0, R_xlen_t n, double alpha, double
 SEXP rF01Joe_vec_c(SEXP V0_, SEXP alpha_, SEXP approx_){
     double *V0 = REAL(V0_);
     R_xlen_t n = xlength(V0_);
-    double alpha = asReal(alpha_), approx = asReal(approx_);
+    double alpha = asReal(alpha_);
+    int approx = asInteger(approx_);
     SEXP res = PROTECT(allocVector(REALSXP, n));
     if(n >= 1) rF01Joe_vec(REAL(res), V0, n, alpha, approx);
     UNPROTECT(1);
