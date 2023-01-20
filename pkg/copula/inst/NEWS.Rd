@@ -3,13 +3,13 @@
 \name{NEWS}
 \title{News for \R Package \pkg{copula}}% MM: look into ../svn-log-from.all
 
-\section{Changes in version 1.1-2 (2023-01-16, svn r1881)}{
+\section{Changes in version 1.1-2 (2023-01-20, svn r1882)}{
   \subsection{Miscellaneous}{
     \itemize{
       \item Avoid long lines in vignette R output.
       \item Replace \code{sprintf()} by \code{snprintf()} as it is going to
       be deprecated in upcoming C environments, e.g., on macOS 13.
-      \item Fix compiler warnings
+      \item Fix \emph{all} current compiler warnings
     }
   }
 }

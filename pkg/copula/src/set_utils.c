@@ -153,7 +153,7 @@ void k_power_set_char(int *n, int *sb, int *k_power_set, char **subset) {
     binary2subset(*n, k_power_set[i], x);
 
     subset[i] = (char *) R_alloc(SET_MAX * (*n), sizeof(char));
-    snprintf(subset[i],(*n), "{%d", x[0]+1);
+    snprintf(subset[i], SET_MAX * (*n), "{%d", x[0]+1);
 
     for(j=1; j < card(k_power_set[i]); j++) {
       char string[255];
