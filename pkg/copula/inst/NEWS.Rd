@@ -3,6 +3,14 @@
 \name{NEWS}
 \title{News for \R Package \pkg{copula}}% MM: look into ../svn-log-from.all
 
+\section{Changes in version 1.1-3 (2023-10-13, svn r1..)}{
+  \subsection{Misc}{
+    \itemize{
+      \item fix "lost braces"
+    }
+  }
+}
+
 \section{Changes in version 1.1-2 (2023-01-20, svn r1882)}{
   \subsection{Miscellaneous}{
     \itemize{
@@ -17,7 +25,7 @@
 \section{Changes in version 1.1-1 (2022-11-17, svn r1880)}{
   \subsection{Miscellaneous}{
     \itemize{
-      \item Fix non-UTF-8 accents in C code {WARN on CRAN}.
+      \item Fix non-UTF-8 accents in C code (\sQuote{WARN} on CRAN).
       \item Decrease the large \file{inst/doc/*.html} vignettes a bit more,
       for a smaller package size (for CRAN).
     }
