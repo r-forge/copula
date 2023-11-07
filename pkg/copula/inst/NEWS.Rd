@@ -3,10 +3,11 @@
 \name{NEWS}
 \title{News for \R Package \pkg{copula}}% MM: look into ../svn-log-from.all
 
-\section{Changes in version 1.1-3 (2023-10-13, svn r1..)}{
+\section{Changes in version 1.1-3 (2023-11-07, svn r1885)}{
   \subsection{Misc}{
     \itemize{
       \item fix "lost braces"
+      \item \file{nacopula-pkg.Rnw} fix for latex
     }
   }
 }
