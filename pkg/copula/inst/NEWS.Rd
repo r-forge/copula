@@ -3,6 +3,14 @@
 \name{NEWS}
 \title{News for \R Package \pkg{copula}}% MM: look into ../svn-log-from.all
 
+\section{Changes in version 1.1-4 (2024-02-07, svn r1889)}{
+  \subsection{Misc}{
+    \itemize{
+      \item Mention how to use colors in \code{?wireframe2}.
+    }
+  }
+}
+
 \section{Changes in version 1.1-3 (2023-12-07, svn r1888)}{
   \subsection{Misc}{
     \itemize{

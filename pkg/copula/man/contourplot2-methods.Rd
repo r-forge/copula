@@ -77,7 +77,8 @@
 \seealso{
   The \code{\link{contour-methods}} for drawing perspective plots via base graphics.
 
-  The \pkg{lattice}-based \code{\link{wireframe2-methods}} for functions,
+  The \pkg{lattice}-based \code{\link{wireframe2-methods}} to get
+  perspective plots for functions,
   and \code{\link{cloud2-methods}} and \code{\link{splom2-methods}} for data.
 }
 \examples{
