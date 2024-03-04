@@ -30,7 +30,7 @@ data("NELS88")
 }
 \source{
   Edward W. Frees, \sQuote{Student Achievement Data} in
-  \url{https://sites.google.com/a/wisc.edu/jed-frees/multivariate-regression-using-copulas}.
+  \url{https://sites.google.com/a/wisc.edu/jed-frees/tutorial-multivariate-regression-using-copulas}.
 
   Originally, the National Center for Education Statistics page,
   \url{https://nces.ed.gov/surveys/nels88/}
