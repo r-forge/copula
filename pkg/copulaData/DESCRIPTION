@@ -2,10 +2,10 @@ Package: copulaData
 Version: 0.0-2
 Title: Data Sets for Copula Modeling
 Authors@R: c(
-	   person("Marius", "Hofert", role=c("aut","cre"), email = "mhofert@hku.hk")
+	   person("Marius", "Hofert", role=c("aut", "cre"), email = "mhofert@hku.hk")
 	 , person("Ivan", "Kojadinovic", role = "aut", email = "ivan.kojadinovic@univ-pau.fr")
 	 , person("Martin", "Maechler", role = "aut", email = "maechler@stat.math.ethz.ch")
-	 , person("Jun", "Yan", rol = "aut", email = "jun.yan@uconn.edu")
+	 , person("Jun", "Yan", role = "aut", email = "jun.yan@uconn.edu")
 	 , person(c("Edward","W."), "Frees", role = "dtc", comment = "NELS and nursingHomes")
 	 )
 Depends: R (>= 3.1.0)
