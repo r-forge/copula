@@ -3,7 +3,12 @@
 \name{NEWS}
 \title{News for \R Package \pkg{copula}}% MM: look into ../svn-log-from.all
 
-\section{Changes in version 1.1-4 (2024-02-07, svn r1889)}{
+\section{Changes in version 1.1-4 (2024-06-09, svn r1890)}{
+  \subsection{Bug Fixes}{
+    \itemize{
+      \item \code{fgmCopula(param, dim)} now checks \code{length(param)} correctly.
+    }
+  }
   \subsection{Misc}{
     \itemize{
       \item Mention how to use colors in \code{?wireframe2}.

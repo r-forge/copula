@@ -42,7 +42,7 @@
   \item{xlim, ylim, zlim}{the x-, y- and z-axis limits.}
   \item{xlab, ylab, zlab}{the x-, y- and z-axis labels.}
   \item{scales}{a \code{\link{list}} determining how the axes are drawn;
-    see \code{\link{wireframe}()}.}
+    see \code{\link[lattice]{wireframe}()}.}
   \item{FUN}{the \code{\link{function}} to be plotted; for a "copula", typically
     \code{\link{dCopula}} or \code{\link{pCopula}}; for an "mvdc",
     rather \code{\link{dMvdc}}, etc.  In general of the form
