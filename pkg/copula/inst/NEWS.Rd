@@ -3,7 +3,7 @@
 \name{NEWS}
 \title{News for \R Package \pkg{copula}}% MM: look into ../svn-log-from.all
 
-\section{Changes in version 1.1-4 (2024-06-09, svn r1890)}{
+\section{Changes in version 1.1-4 (2024-08-19, svn r1896)}{
   \subsection{Bug Fixes}{
     \itemize{
       \item \code{fgmCopula(param, dim)} now checks \code{length(param)} correctly.
@@ -12,6 +12,9 @@
   \subsection{Misc}{
     \itemize{
       \item Mention how to use colors in \code{?wireframe2}.
+
+      \item Regr.tests e.g. with valgrind are really slow; hence, do
+       no longer check for \code{system.time()} used {unless doExtras}
     }
   }
 }
