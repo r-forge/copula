@@ -3,7 +3,17 @@
 \name{NEWS}
 \title{News for \R Package \pkg{copula}}% MM: look into ../svn-log-from.all
 
-\section{Changes in version 1.1-4 (2024-08-19, svn r1896)}{
+\section{Changes in version 1.1-5 (2024-08-19, svn r1896)}{
+  \subsection{Misc}{
+    \itemize{
+      \item \code{system.time()} results in \file{../tests/Stirling-etc.R}
+      are no longer tested (unless \code{doExtras}), as they can't work
+      e.g., for valgrind extra tests.
+    }
+  }
+}
+
+\section{Changes in version 1.1-4 (2024-08-12, svn r1895)}{
   \subsection{Bug Fixes}{
     \itemize{
       \item \code{fgmCopula(param, dim)} now checks \code{length(param)} correctly.
