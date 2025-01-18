@@ -18,7 +18,7 @@ loglikCopula(param = getTheta(copula), u, copula,
 
 loglikCopulaMany(pList, u, copula)
 
-## Generic [and "rotCopula" method] : %- ../R/fitCopula.R
+## Generic [and "parCopula" method] : %- ../R/fitCopula.R
 fitCopula(copula, data, \dots)
 \S4method{fitCopula}{parCopula}(copula, data,
           method = c("mpl", "ml", "itau", "irho", "itau.mpl"),
@@ -115,7 +115,7 @@ optimMeth(copula, method, dim)
     \code{\link{TRUE}}, suppresses warnings from the involved
     likelihood maximization (typically when the likelihood is
     evaluated at invalid parameter values).}
-  \item{\dots}{additional arguments passed to \code{method} specific auxiliary
+  \item{\dots}{additional arguments passed to \code{method}-specific auxiliary
     functions, e.g., \code{traceOpt = TRUE} (or \code{traceOpt = 10}) for tracing
     \code{\link{optimize}} (every 10-th function evaluation) for method
     \code{"itau.mpl"}, and for \dQuote{manual} tracing with method

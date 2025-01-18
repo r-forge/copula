@@ -3,7 +3,20 @@
 \name{NEWS}
 \title{News for \R Package \pkg{copula}}% MM: look into ../svn-log-from.all
 
-\section{Changes in version 1.1-5 (2024-08-19, svn r1896)}{
+\section{Changes in version 1.1-5 (2025-01-18, svn r1899)}{
+  \subsection{New Features}{
+    \itemize{
+      \item The density, and hence likelihood and \code{fitCopula()} fits
+      for Clayton copulas has been robustified numerically, such that the
+      log likelihood does not underflow to \code{-Inf} unnecessarily.
+    }
+  }
+  \subsection{Bug Fixes}{
+    \itemize{
+      \item \code{fitCopula(.., method = "Nelder-Mead")} no longer shows
+      \code{optim()} warnings (in 1d-case).
+    }
+  }
   \subsection{Misc}{
     \itemize{
       \item \code{system.time()} results in \file{../tests/Stirling-etc.R}
@@ -24,7 +37,7 @@
       \item Mention how to use colors in \code{?wireframe2}.
 
       \item Regr.tests e.g. with valgrind are really slow; hence, do
-       no longer check for \code{system.time()} used {unless doExtras}
+       no longer check for \code{system.time()} used (unless doExtras)
     }
   }
 }
