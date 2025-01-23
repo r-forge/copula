@@ -272,7 +272,7 @@ u <- pobs(x)                # pseudo-observations
 ## Inverting Kendall's tau
 fit.tau <- fitCopula(gumbelCopula(), u, method="itau")
 fit.tau
-confint(fit.tau) # work fine !
+confint(fit.tau) # works fine !
 confint(fit.tau, level = 0.98)
 summary(fit.tau) # a bit more, notably "Std. Error"s
 coef(fit.tau)# named vector
@@ -302,14 +302,17 @@ u <- pobs(x)                # pseudo-observations
 ## Inverting Kendall's tau
 fit.tau <- fitCopula(normalCopula(dim=3, dispstr="un"), u, method="itau")
 fit.tau
-## Inverting Spearman's rho
-fit.rho <- fitCopula(normalCopula(dim=3, dispstr="un"), u, method="irho")
-fit.rho
-## Maximum pseudo-likelihood
-fit.mpl <- fitCopula(normalCopula(dim=3, dispstr="un"), u, method="mpl")
-summary(fit.mpl)
-coef(fit.mpl) # named vector
-coef(fit.mpl, SE = TRUE) # the matrix, with SE
+
+if(Xtras) withAutoprint({ ## needs time
+  ## Inverting Spearman's rho
+  fit.rho <- fitCopula(normalCopula(dim=3, dispstr="un"), u, method="irho")
+  fit.rho
+  ## Maximum pseudo-likelihood
+  fit.mpl <- fitCopula(normalCopula(dim=3, dispstr="un"), u, method="mpl")
+  summary(fit.mpl)
+  coef(fit.mpl) # named vector
+  coef(fit.mpl, SE = TRUE) # the matrix, with SE
+}) #
 ## Maximum likelihood (use 'x', not 'u' !)
 fit.ml <- fitCopula(normalCopula(dim=3, dispstr="un"), x, method="ml", traceOpt=TRUE)
 summary(fit.ml)
