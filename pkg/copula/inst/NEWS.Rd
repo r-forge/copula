@@ -3,7 +3,7 @@
 \name{NEWS}
 \title{News for \R Package \pkg{copula}}% MM: look into ../svn-log-from.all
 
-\section{Changes in version 1.1-5 (2025-01-18, svn r1899)}{
+\section{Changes in version 1.1-5 (2025-02-08, svn r1901)}{
   \subsection{New Features}{
     \itemize{
       \item The density, and hence likelihood and \code{fitCopula()} fits
@@ -22,6 +22,7 @@
       \item \code{system.time()} results in \file{../tests/Stirling-etc.R}
       are no longer tested (unless \code{doExtras}), as they can't work
       e.g., for valgrind extra tests.
+      \item Speed up 3 more examples.
     }
   }
 }
