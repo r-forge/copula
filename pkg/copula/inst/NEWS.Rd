@@ -3,7 +3,7 @@
 \name{NEWS}
 \title{News for \R Package \pkg{copula}}% MM: look into ../svn-log-from.all
 
-\section{Changes in version 1.1-5 (2025-02-08, svn r1901)}{
+\section{Changes in version 1.1-5 (2025-02-09, svn r1902)}{
   \subsection{New Features}{
     \itemize{
       \item The density, and hence likelihood and \code{fitCopula()} fits
