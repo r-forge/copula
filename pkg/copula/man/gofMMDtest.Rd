@@ -21,6 +21,10 @@ gofMMDtest(x, y, N = 1000, bandwidth2 = 10^c(-4, -3, -2, -3/2, -5/4, -9/8))
   the underlying kernel is a Gaussian mixture kernel. The scaling of
   the norm in the kernel is done for comparison of test statistics in
   different dimensions.
+
+  Note that his is currently an experimental function, there are
+  no known theoretical guarantees for applying this test to
+  pseudo-observations, etc.
 }
 \value{
   An object of \code{\link{class}} \code{htest} which is a list with
