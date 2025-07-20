@@ -29,22 +29,25 @@
 ##' @return Object of class 'htest'
 ##' @author Marius Hofert and Ivan Kojadinovic
 gofMMDtest <- function(x, y, N = 1000, bandwidth2 = 10^c(-4, -3, -2, -3/2, -5/4, -9/8)) {
-  res <- .C(gofMMDtest_c,
-            as.double(t(x)),
-            as.double(t(y)),
-            as.integer(nrow(x)),
-            as.integer(ncol(x)),
-            as.integer(N),
-            as.double(bandwidth2),
-            as.integer(length(bandwidth2)),
-            MMD2 = double(1),
-            MMD2H0 = double(N))
-  structure(class = "htest",
-            list(method = "Two-sample unbiased-MMD^2 based test of equality of two distributions",
-                 statistic = c(statistic = res$MMD2),
-                 statistics.H0 = c(statistics.H0 = res$MMD2H0),
-                 p.value = (sum(res$MMD2H0 >= res$MMD2) + 0.5) / (N + 1),
-                 data.name = paste0(c(deparse(substitute(x)), deparse(substitute(y))), collapse = ", ")))
+    n <- nrow(x)
+    d <- ncol(x)
+    stopifnot(dim(y) == c(n, d))
+    res <- .C(gofMMDtest_c,
+              as.double(t(x)),
+              as.double(t(y)),
+              as.integer(n),
+              as.integer(d),
+              as.integer(N),
+              as.double(bandwidth2),
+              as.integer(length(bandwidth2)),
+              MMD2 = double(1),
+              MMD2H0 = double(N))
+    structure(class = "htest",
+              list(method = "Two-sample unbiased-MMD^2 based test of equality of two distributions",
+                   statistic = c(statistic = res$MMD2),
+                   statistics.H0 = c(statistics.H0 = res$MMD2H0),
+                   p.value = (sum(res$MMD2H0 >= res$MMD2) + 0.5) / (N + 1),
+                   data.name = paste0(c(deparse(substitute(x)), deparse(substitute(y))), collapse = ", ")))
 }
 
 

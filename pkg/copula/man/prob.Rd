@@ -2,6 +2,7 @@
 \alias{prob}
 \alias{prob-methods}
 \alias{prob,Copula-method}
+\alias{volume}
 \title{Computing Probabilities of Hypercubes}
 \description{
   Compute probabilities of a \eqn{d-}dimensional random vector \eqn{U}
@@ -11,17 +12,25 @@
 }
 \usage{
 prob(x, l, u)
+volume(FUN, lower, upper, ...)
 }
 \arguments{
   \item{x}{copula of dimension \eqn{d}, that is, an object
     inheriting from \code{\linkS4class{Copula}}.}
-  \item{l, u}{\eqn{d}-dimensional, \code{\link{numeric}}, lower and
-    upper hypercube boundaries, respectively, satisfying
+  \item{l, u, lower, upper}{\eqn{d}-dimensional, \code{\link{numeric}},
+    lower and upper hypercube boundaries, respectively, satisfying
     \eqn{0 \le l_i \le u_i \le 1}{0 <= l_i <= u_i <= 1},
-    for \eqn{i\in{1,\dots,d}}{i in {1,...,d}}.}
+    for \eqn{i\in{1,\dots,d}}{i in {1,...,d}}. No checks are done
+    for \code{volume()} except for being of the same length.}
+  \item{FUN}{\code{\link{function}} to compute the volume of.}
+  \item{\dots}{additional arguments passed to \code{FUN}.}
 }
-\value{A \code{\link{numeric}} in \eqn{[0,1]} which is the probability
-  \eqn{P(l_i< U_i \le u_i)}{P(l[i] < U[i] <= u[i])}.
+\value{
+  \code{prob()} returns a \code{\link{numeric}} in \eqn{[0,1]}
+  which is the probability \eqn{P(l_i< U_i \le u_i)}{P(l[i] < U[i] <= u[i])}.
+
+  \code{volume()} is the workhorse underlying \code{prob()} and its output
+  is the \eqn{d}-volume of the provided function.
 }
 %\author{Marius Hofert and Martin Maechler}
 \seealso{

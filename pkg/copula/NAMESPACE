@@ -288,6 +288,7 @@ export("copAMH", "copClayton", "copFrank", "copGumbel", "copJoe"
        ,"printNacopula"
        ,"interval"
        ,"opower"
+       ,"volume"
        ,"prob"
        ,"nacFrail.time"
        ## Should we provide these in a separate (very small) R package ?
