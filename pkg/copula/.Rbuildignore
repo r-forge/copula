@@ -1,3 +1,5 @@
+## -*-sh-*-  using reg.exp (==> no initial or final '.*'),  but case is ignored!
+
 [A-Za-z]\++$
 Rd?[-_]+$
 [A-Za-z]\+[A-Za-z0-9]

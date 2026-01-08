@@ -3,7 +3,15 @@
 \name{NEWS}
 \title{News for \R Package \pkg{copula}}% MM: look into ../svn-log-from.all
 
-\section{Changes in version 1.1-7 (2025-04-23, svn r1904)}{
+\section{Changes in version 1.1-7 (2026-01-08, svn r1908)}{
+  \subsection{New Features}{
+    \itemize{
+      \item New experimental \code{gofMMDtest()}, multiplier bootstrap, based
+      on the squared MMD.
+
+      \item Add \code{volume()} as standalone auxiliary function for \code{prob()}.
+    }
+  }
   \subsection{Bug Fixes}{
     \itemize{
       \item \code{mvdc()} more carefully checks \code{paramMargins},
@@ -17,6 +25,9 @@
       \item \code{fitMvdc()} consequently works on the log scale instead of
       taking logs; this is typically faster and more accurate, but notably even
       necessary for \dQuote{large} \eqn{n} or large \code{dim}\eqn{= d}.
+
+      \item Fix the \emph{relative} link to the \sQuote{Frank-Rmpfr}
+      vignette in \code{help(copula-package)}.
     }
   }
 }

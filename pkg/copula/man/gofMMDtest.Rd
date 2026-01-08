@@ -3,7 +3,7 @@
 \title{Goodness-of-fit Two-Sample Test}
 \description{
   \code{gofMMDtest()} computes the two-sample goodness of fit test
-  of Schrab et al. (2024).
+  of Schrab et al. (2024), a multiplier bootstrap based on the squared MMD.
 }
 \usage{
 gofMMDtest(x, y, N = 1000, bandwidth2 = 10^c(-4, -3, -2, -3/2, -5/4, -9/8))
@@ -17,7 +17,7 @@ gofMMDtest(x, y, N = 1000, bandwidth2 = 10^c(-4, -3, -2, -3/2, -5/4, -9/8))
     mixture kernel based on the average norm (norm scaled by \eqn{1/d}).}
 }
 \details{
-  The test is a multiplier bootstrap based on the squared MMD, where
+  The test is a multiplier bootstrap test, based on the squared MMD, where
   the underlying kernel is a Gaussian mixture kernel. The scaling of
   the norm in the kernel is done for comparison of test statistics in
   different dimensions.
@@ -35,11 +35,10 @@ gofMMDtest(x, y, N = 1000, bandwidth2 = 10^c(-4, -3, -2, -3/2, -5/4, -9/8))
   \item{p.value}{the bootstrapped p-value.}
   \item{data.name}{a string identifying the data used.}
 }
-%\author{Marius Hofert and Martin Maechler}
+\author{Marius Hofert}
 \references{
-  Schrab, A., Kim, I. Albert, M., Laurent, B., Guedj, B., Gretton,
-  A. (2023). MMD aggregated two-sample test. \emph{Journal of Machine
-  Learning Research} \bold{24}, 1--81.
+  Schrab, A., Kim, I. Albert, M., Laurent, B., Guedj, B., Gretton, A. (2023)
+  MMD aggregated two-sample test. \emph{Journal of Machine Learning Research} \bold{24}, 1--81.
 }
 \seealso{
   \code{\link{gofT2stat}()} for another two-sample goodness-of-fit

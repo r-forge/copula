@@ -20,9 +20,10 @@ volume(FUN, lower, upper, ...)
   \item{l, u, lower, upper}{\eqn{d}-dimensional, \code{\link{numeric}},
     lower and upper hypercube boundaries, respectively, satisfying
     \eqn{0 \le l_i \le u_i \le 1}{0 <= l_i <= u_i <= 1},
-    for \eqn{i\in{1,\dots,d}}{i in {1,...,d}}. No checks are done
+    for \eqn{i\in{1,\dots,d}}{i in {1,...,d}}.  No checks are done
     for \code{volume()} except for being of the same length.}
-  \item{FUN}{\code{\link{function}} to compute the volume of.}
+  \item{FUN}{\code{\link{function}} to compute the volume of wrt to the
+    specified hypercube.}
   \item{\dots}{additional arguments passed to \code{FUN}.}
 }
 \value{
