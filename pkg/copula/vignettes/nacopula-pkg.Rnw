@@ -63,11 +63,11 @@
 	Url \emph{was} \texttt{https://people.math.ethz.ch/\~{}hofertj/}
  \par\bigskip
 	Martin M\"achler\\
-	Seminar f\"ur Statistik, HG G~16\\
+	Seminar f\"ur Statistik, HG G~14.2\\
 	ETH Zurich\\
 	8092 Zurich, Switzerland\\
 	E-mail: \email{maechler@stat.math.ethz.ch}\\
-	URL: \url{https://people.math.ethz.ch/~maechler}
+	URL: \url{https://people.math.ethz.ch/~maechler/}
 }
 %% for those who use Sweave please include the following line (with % symbols):
 %% MM: this is "substituted" by  jss.cls:

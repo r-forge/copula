@@ -39,5 +39,5 @@ inst/doc/.*_ver.*\.pdf
 inst/doc/(nacopula-pkg|Frank-Rmpfr)[-_].*\.(pdf|png)
 inst/doc/.*\.(log|blg|aux|out|tex|bbl|jpg|zip)$
 vignettes/.*_files
-vignettes/[^/]*\.(bbl|pdf|html)$
+vignettes/[^/]*\.(bbl|blg|pdf|html)$
 
