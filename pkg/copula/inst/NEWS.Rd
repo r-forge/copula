@@ -3,7 +3,7 @@
 \name{NEWS}
 \title{News for \R Package \pkg{copula}}% MM: look into ../svn-log-from.all
 
-\section{Changes in version 1.1-7 (2026-02-03, svn r1912)}{
+\section{Changes in version 1.1-7 (2026-02-16, svn r1912)}{
   \subsection{New Features}{
     \itemize{
       \item New experimental \code{gofMMDtest()}, multiplier bootstrap, based
