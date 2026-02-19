@@ -1,7 +1,7 @@
 Package: copula
 Version: 1.1-7
 VersionNote: Last CRAN: 1.1-6 on 2025-03-05, 1.1-5 on 2025-02-09, 1.1-4 on 2024-08-12
-Date: 2026-02-16
+Date: 2026-02-19
 Title: Multivariate Dependence with Copulas
 Authors@R: c(person("Marius", "Hofert", role = "aut", email = "marius.hofert@uwaterloo.ca",       comment = c(ORCID = "0000-0001-8009-4665"))
 	   , person("Ivan", "Kojadinovic", role = "aut", email = "ivan.kojadinovic@univ-pau.fr",  comment = c(ORCID = "0000-0002-2903-1543"))
@@ -11,7 +11,8 @@ Authors@R: c(person("Marius", "Hofert", role = "aut", email = "marius.hofert@uwa
 	   , person("Rebecca", "Morger", role = "ctb", comment = "fitCopula.ml(): code for free mixCopula weight parameters")
 	   )
 Depends: R (>= 3.5.0)
-Imports: stats, graphics, methods, stats4, Matrix (>= 1.5-0), lattice, colorspace,
+Imports: stats, graphics, methods, stats4, Matrix (>= 1.5-0), lattice, cluster,
+	colorspace,
 	gsl, ADGofTest, stabledist (>= 0.6-4), mvtnorm, pcaPP, pspline, numDeriv
 Suggests: MASS, KernSmooth, sfsmisc, scatterplot3d, Rmpfr, bbmle, knitr, rmarkdown,
 	animation, abind, crop, gridExtra, HAC, lcopula, mev, mvnormtest, parallel, partitions,

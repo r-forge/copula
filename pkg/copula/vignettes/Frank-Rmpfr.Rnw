@@ -8,7 +8,7 @@
 \title{Numerically Stable Frank Copula Functions via Multiprecision:
   \proglang{R} Package \pkg{Rmpfr}}
 % \def\mythanks{a version of this paper, for \pkg{copula} 0.4\_4, has been published
-%     in JSS, \url{https://www.jstatsoft.org/v39/i09}.}
+%     in JSS, \url{https://www.jstatsoft.org/v39/i09/}.}
 %% for pretty printing and a nice hypersummary also set:
 \Plainauthor{Martin M\"achler} %% comma-separated
 \Plaintitle{Numerically Stable Frank Copula Functions via Multiprecision:
