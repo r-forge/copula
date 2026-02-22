@@ -297,6 +297,14 @@ setMethod("rCopula", signature("numeric", "empCopula"),
                                      function(j) U.sort[R[,j],j], numeric(n.x)) # sort U.sort according to ranks R
                          I <- sample(1:n.x, size = n, replace = TRUE) # n-vector of random indices
                          U[I,] # randomly index
+                         ## Note: U_{(k)} is also \Beta(k,n+1-k) distributed (more efficient to directly
+                         ##       call rbeta?), as for the empirical beta copula (so those steps are
+                         ##       equivalent). The difference to the Schaake shuffle is that the latter
+                         ##       only uses n = n.x ranks and sorted uniforms and re-indexes those uniforms,
+                         ##       whereas the empirical beta copula re-indexes the n = n.x ranks (so re-indexes
+                         ##       one level further up, which doesn't matter) but then draws actually
+                         ##       new observations from (possibly the same) beta distributions, so
+                         ##       should a.s. not lead to ties.
                      },
                      stop("Wrong 'smoothing'"))
           })
