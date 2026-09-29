@@ -3,6 +3,15 @@
 \name{NEWS}
 \title{News for \R Package \pkg{copula}}% MM: look into ../svn-log-from.all
 
+\section{Changes in version 1.1-8 (2026-07-30, svn r1915)}{
+  \subsection{Misc}{
+    \itemize{
+      \item No longer use the newly deprecated \code{structure(.Names = *)}.
+      \item Fix some URLs.
+    }
+  }
+}
+
 \section{Changes in version 1.1-7 (2026-02-19, svn r1913)}{
   \subsection{New Features}{
     \itemize{

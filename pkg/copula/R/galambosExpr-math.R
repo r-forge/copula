@@ -44,7 +44,7 @@ structure(expression(cdf = (u1 * u2)^(1 - ((1 - log(u1)/log(u1 *
             u2)^2)) + 1/(u1 * log(u1 * u2))) * (log(u1)/log(u1 *
             u2))^(-1 - alpha)) * ((1 - log(u1)/log(u1 * u2))^(-alpha) +
             (log(u1)/log(u1 * u2))^(-alpha))^(-1 - 1/alpha) *
-            log(u1 * u2))/alpha)), .Names = c("cdf", "pdf", "deriv1cdf"
+            log(u1 * u2))/alpha)), names = c("cdf", "pdf", "deriv1cdf"
 ))
 `galambosCopula.algr` <-
 structure(expression(cdf = {
@@ -100,4 +100,4 @@ structure(expression(cdf = {
     .grad[, "s"] <- 0
     attr(.value, "gradient") <- .grad
     .value
-}), .Names = c("cdf", "pdf", "deriv1cdf"))
+}), names = c("cdf", "pdf", "deriv1cdf"))
